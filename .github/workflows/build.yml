@@ -23,10 +23,10 @@ jobs:
           set __COMPAT_LAYER=RUNASINVOKER &&^
           start .\installer.exe &&^
           C:\Windows\System32\cmd.exe /c start /wait /min timeout.exe /t 900 &&^
-          C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
-          C:\Windows\System32\taskkill.exe /f /im streamer.exe &&^
-          C:\Windows\System32\taskkill.exe /f /im Fusion360.exe &&^
-          C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe &&^
+          (   C:\Windows\System32\taskkill.exe /f /im installer.exe || ^
+          C:\Windows\System32\taskkill.exe /f /im streamer.exe || ^
+          C:\Windows\System32\taskkill.exe /f /im Fusion360.exe || ^
+          C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe   ) &&^
           dir
           
       - shell: cmd
