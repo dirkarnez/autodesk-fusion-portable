@@ -13,28 +13,44 @@ jobs:
     name: Create Release
     runs-on: windows-latest
     env:
-      targetZip: autodesk-fusion-installer-${{ github.ref_name }}.zip
+      targetZip: autodesk-fusion-portable-${{ github.ref_name }}.zip
     steps:
       - run: |
           curl "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20Client%20Downloader.exe" -L --output installer.exe
+
+      - uses: actions/checkout@v4
       
       - shell: cmd
         run: |
           set __COMPAT_LAYER=RUNASINVOKER &&^
           start .\installer.exe &&^
           C:\Windows\System32\cmd.exe /c start /wait /min timeout.exe /t 1800 &&^
-          (   C:\Windows\System32\taskkill.exe /f /im installer.exe || ^
+          echo timeout && (   C:\Windows\System32\taskkill.exe /f /im installer.exe || ^
           C:\Windows\System32\taskkill.exe /f /im streamer.exe || ^
           C:\Windows\System32\taskkill.exe /f /im Fusion360.exe || ^
-          C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe   ) &&^
-          dir
-
+          C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe   )
+          
       - shell: cmd
         run: |
-          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production" &&^
-          7z.exe -v100m a "${{ github.workspace }}\${{ env.targetZip }}" &&^
+          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\" &&^
+          move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe.ini" ad7281617f9bd8f5795b94fde099c32079296a4e
+      
+      - shell: cmd
+        run: move /H /Y /C "FusionLauncher.exe.Portable.cmd" "%LOCALAPPDATA%\Autodesk\webdeploy\production\ad7281617f9bd8f5795b94fde099c32079296a4e"
+        
+      - shell: cmd
+        run: |
+          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\ad7281617f9bd8f5795b94fde099c32079296a4e" &&^
+          dir
+        
+      - shell: cmd
+        run: |
+          7z.exe -v100m a -tzip "${{ env.targetZip }}" "%LOCALAPPDATA%\Autodesk\webdeploy\production\ad7281617f9bd8f5795b94fde099c32079296a4e\" &&^
           dir
           
+      - shell: cmd
+        run: dir
+        
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
