@@ -22,17 +22,17 @@ jobs:
         run: |
           set __COMPAT_LAYER=RUNASINVOKER &&^
           start .\installer.exe &&^
-          C:\Windows\System32\cmd.exe /c start /wait /min timeout.exe /t 900 &&^
+          C:\Windows\System32\cmd.exe /c start /wait /min timeout.exe /t 1800 &&^
           (   C:\Windows\System32\taskkill.exe /f /im installer.exe || ^
           C:\Windows\System32\taskkill.exe /f /im streamer.exe || ^
           C:\Windows\System32\taskkill.exe /f /im Fusion360.exe || ^
           C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe   ) &&^
           dir
-          
+
       - shell: cmd
         run: |
-          cd /d "%LOCALAPPDATA%\Autodesk" &&^
-          7z.exe a "${{ github.workspace }}\${{ env.targetZip }}" &&^
+          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production" &&^
+          7z.exe -v100m a "${{ github.workspace }}\${{ env.targetZip }}" &&^
           dir
           
       - name: Release prebuilt
