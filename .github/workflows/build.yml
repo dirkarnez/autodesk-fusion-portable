@@ -1,0 +1,39 @@
+name: portable-release-actions-workflow
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - '*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+permissions:
+    contents: write
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: windows-latest
+    env:
+      targetZip: autodesk-fusion-installer-${{ github.ref_name }}.zip
+      version: 8.0.4
+    steps:
+      - run: |
+          curl "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20Client%20Downloader.exe" -L --output installer.exe
+      
+      - shell: cmd
+        run: |
+          set __COMPAT_LAYER=RUNASINVOKER &&^
+          .\installer.exe &&^
+          dir
+          
+      - shell: cmd
+        run: |
+          cd /d "%LOCALAPPDATA%\Autodesk" &&^
+          7z.exe a "${{ github.workspace }}\${{ env.targetZip }}" &&^
+          dir
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ env.targetZip }}"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
