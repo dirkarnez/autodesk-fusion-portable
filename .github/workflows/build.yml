@@ -14,7 +14,6 @@ jobs:
     runs-on: windows-latest
     env:
       targetZip: autodesk-fusion-installer-${{ github.ref_name }}.zip
-      version: 8.0.4
     steps:
       - run: |
           curl "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20Client%20Downloader.exe" -L --output installer.exe
@@ -23,8 +22,9 @@ jobs:
         run: |
           set __COMPAT_LAYER=RUNASINVOKER &&^
           start .\installer.exe &&^
-          C:\Windows\System32\timeout.exe /t 180 &&^
+          C:\Windows\System32\timeout.exe /t 900 &&^
           C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
+          C:\Windows\System32\taskkill.exe /f /im streamer.exe &&^
           dir
           
       - shell: cmd
