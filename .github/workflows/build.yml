@@ -24,7 +24,8 @@ jobs:
         run: |
           set __COMPAT_LAYER=RUNASINVOKER &&^
           start .\installer.exe &&^
-          C:\Windows\System32\cmd.exe /c start /wait /min timeout.exe /t 1800 &&^
+          C:\Windows\System32\cmd.exe /c start /wait /min timeout.exe /t 5 &&^
+          (   C:\Windows\System32\taskkill.exe /f /im installer.exe ) &&^
           dir
 
       - shell: cmd
