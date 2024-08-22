@@ -22,7 +22,9 @@ jobs:
       - shell: cmd
         run: |
           set __COMPAT_LAYER=RUNASINVOKER &&^
-          .\installer.exe &&^
+          start .\installer.exe &&^
+          C:\Windows\System32\timeout.exe /t 180 &&^
+          C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
           dir
           
       - shell: cmd
