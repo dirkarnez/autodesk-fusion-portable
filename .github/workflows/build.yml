@@ -23,7 +23,7 @@ jobs:
       - shell: cmd
         run: |
           start "".\installer.exe &&^
-          start /wait /min "timeout.exe /t 5 && taskkill /f im streamer.exe"
+          start /wait /min "timeout.exe /t 5 && echo 123 && taskkill /f im streamer.exe"
 
       - shell: cmd
         continue-on-error: true
