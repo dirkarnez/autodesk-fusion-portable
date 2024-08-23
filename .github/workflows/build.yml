@@ -23,10 +23,8 @@ jobs:
       - shell: cmd
         run: |
           set __COMPAT_LAYER=RUNASINVOKER &&^
-          start "" /b .\installer.exe &&^
-          start /wait /min timeout.exe /t 5 &&^
-          (   C:\Windows\System32\taskkill.exe /f /im installer.exe ) &&^
-          dir
+          start "".\installer.exe &&^
+          start /wait /min "timeout.exe /t 5 && taskkill /f im streamer.exe && taskkill /f /im installer.exe"
 
       - shell: cmd
         continue-on-error: true
