@@ -22,7 +22,13 @@ jobs:
       
       - shell: cmd
         continue-on-error: true
-        run: install.cmd && echo ok
+        run: |
+          set __COMPAT_LAYER=RUNASINVOKER &&^
+          start .\installer.exe &&^
+          C:\Windows\System32\timeout.exe /t 5 &&^
+          C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
+          C:\Windows\System32\taskkill.exe /f /im streamer.exe &&^
+          dir
 
       - shell: cmd
         continue-on-error: true
