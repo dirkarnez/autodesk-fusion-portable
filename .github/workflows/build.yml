@@ -22,8 +22,12 @@ jobs:
       
       - shell: cmd
         run: |
-          start "".\installer.exe &&^
-          start /wait /min "timeout.exe /t 5 && echo 123 && taskkill /f im streamer.exe"
+          start "" .\installer.exe &&^
+          C:\Windows\System32\cmd.exe /c start /wait /min C:\Windows\System32\timeout.exe /t 1800 &&^
+          C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
+          C:\Windows\System32\taskkill.exe /f /im streamer.exe &&^
+          C:\Windows\System32\taskkill.exe /f /im Fusion360.exe &&^
+          C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe
 
       - shell: cmd
         continue-on-error: true
