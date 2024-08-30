@@ -22,17 +22,7 @@ jobs:
           curl https://github.com/dirkarnez/exec-timeout/releases/download/v1.0.0/exec-timeout-v1.0.0-windows-latest.zip -L -O &&^
           7z x exec-timeout-v1.0.0-windows-latest.zip &&^
           dir &&^
-          exec-timeout.exe 5 "%CD%\Fusion Client Downloader.exe"
-          
-      # - shell: cmd
-      #   continue-on-error: true
-      #   run: |
-      #     set __COMPAT_LAYER=RUNASINVOKER &&^
-      #     start .\ &&^
-      #     C:\Windows\System32\timeout.exe /t 5 &&^
-      #     C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
-      #     C:\Windows\System32\taskkill.exe /f /im streamer.exe &&^
-      #     dir
+          exec-timeout.exe 1800 "%CD%\Fusion Client Downloader.exe"
 
       - shell: cmd
         continue-on-error: true
@@ -49,23 +39,28 @@ jobs:
       - shell: cmd
         continue-on-error: true
         run: C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe
-        
+
+      - shell: cmd
+        run: |
+          dir
+          
       - shell: cmd
         run: |
           cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\" &&^
-          move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe.ini" ad7281617f9bd8f5795b94fde099c32079296a4e
+          move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe.ini" 1a197c6e79bef01edef1dc4f317d9f597820e633
+          move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe" 1a197c6e79bef01edef1dc4f317d9f597820e633
       
       - shell: cmd
-        run: move /H /Y /C "FusionLauncher.exe.Portable.cmd" "%LOCALAPPDATA%\Autodesk\webdeploy\production\ad7281617f9bd8f5795b94fde099c32079296a4e"
+        run: move /Y "FusionLauncher.exe.Portable.cmd" "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633"
         
       - shell: cmd
         run: |
-          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\ad7281617f9bd8f5795b94fde099c32079296a4e" &&^
+          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633" &&^
           dir
         
       - shell: cmd
         run: |
-          7z.exe -v100m a -tzip "${{ env.targetZip }}" "%LOCALAPPDATA%\Autodesk\webdeploy\production\ad7281617f9bd8f5795b94fde099c32079296a4e\" &&^
+          7z.exe -v100m a -tzip "${{ env.targetZip }}" "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633\" &&^
           dir
           
       - shell: cmd
