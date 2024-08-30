@@ -19,16 +19,24 @@ jobs:
           curl "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20Client%20Downloader.exe" -L --output installer.exe
 
       - uses: actions/checkout@v4
-      
+
+      - run: |
+          curl https://github.com/dirkarnez/exec-timeout/releases/download/v1.0.0/exec-timeout-v1.0.0-ubuntu-latest.zip -L -O &&^
+          7z x exec-timeout-v1.0.0-ubuntu-latest.zip
+          
       - shell: cmd
-        continue-on-error: true
         run: |
-          set __COMPAT_LAYER=RUNASINVOKER &&^
-          start .\installer.exe &&^
-          C:\Windows\System32\timeout.exe /t 5 &&^
-          C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
-          C:\Windows\System32\taskkill.exe /f /im streamer.exe &&^
-          dir
+          exec-timeout.exe 5 installer.exe
+          
+      # - shell: cmd
+      #   continue-on-error: true
+      #   run: |
+      #     set __COMPAT_LAYER=RUNASINVOKER &&^
+      #     start .\ &&^
+      #     C:\Windows\System32\timeout.exe /t 5 &&^
+      #     C:\Windows\System32\taskkill.exe /f /im installer.exe &&^
+      #     C:\Windows\System32\taskkill.exe /f /im streamer.exe &&^
+      #     dir
 
       - shell: cmd
         continue-on-error: true
