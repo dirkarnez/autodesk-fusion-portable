@@ -52,12 +52,14 @@ jobs:
           move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe.ini" 1a197c6e79bef01edef1dc4f317d9f597820e633 &&^
           move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe" 1a197c6e79bef01edef1dc4f317d9f597820e633 &&^
           dir
-
-      - shell: bash
+          
+      - shell: cmd
         run: |
-          cd "$LOCALAPPDATA/Autodesk/webdeploy/production/1a197c6e79bef01edef1dc4f317d9f597820e633" && \
-          sed -i 's/^cmd\s\+=.*/cmd = ""Fusion360.exe""/g' FusionLauncher.exe.ini && \
-          cat FusionLauncher.exe.ini
+          cd /d "$LOCALAPPDATA\Autodesk\webdeploy\production" && \
+          curl https://github.com/dirkarnez/regex-file-replace/releases/download/v1.0.0/regex-file-replace-v1.0.0-windows-latest.zip -L -O &&^
+          7z x regex-file-replace-v1.0.0-windows-latest.zip &&^
+          .\regex-file-replace.exe --regex="^cmd = .*" --replacement="cmd = \"\"Fusion360.exe\"\"" --filepath=1a197c6e79bef01edef1dc4f317d9f597820e633\FusionLauncher.exe.ini &&^
+          type .\1a197c6e79bef01edef1dc4f317d9f597820e633\FusionLauncher.exe.ini
           
       - shell: cmd
         run: move /Y "FusionLauncher.exe.Portable.cmd" "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633"
