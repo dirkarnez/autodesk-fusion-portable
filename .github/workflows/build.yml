@@ -55,7 +55,7 @@ jobs:
 
       - shell: bash
         run: |
-          cd "$LOCALAPPDATA/Autodesk/webdeploy/production" && \
+          cd "$LOCALAPPDATA/Autodesk/webdeploy/production/1a197c6e79bef01edef1dc4f317d9f597820e633" && \
           sed -i 's/^cmd\s\+=.*/cmd = ""Fusion360.exe""/g' FusionLauncher.exe.ini && \
           cat FusionLauncher.exe.ini
           
