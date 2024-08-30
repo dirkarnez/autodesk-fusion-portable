@@ -23,7 +23,7 @@ jobs:
       - shell: cmd
         run: |
           curl https://github.com/dirkarnez/exec-timeout/releases/download/v1.0.0/exec-timeout-v1.0.0-windows-latest.zip -L -O &&^
-          7z x exec-timeout-v1.0.0-ubuntu-latest.zip
+          7z x exec-timeout-v1.0.0-windows-latest.zip
           
       - shell: cmd
         run: |
