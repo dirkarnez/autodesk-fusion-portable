@@ -27,7 +27,7 @@ jobs:
           
       - shell: cmd
         run: |
-          exec-timeout.exe 5 installer.exe
+          exec-timeout.exe 5 "%CD%\installer.exe"
           
       # - shell: cmd
       #   continue-on-error: true
