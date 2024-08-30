@@ -33,15 +33,15 @@ jobs:
         continue-on-error: true
         run: C:\Windows\System32\taskkill.exe /f /im "Fusion Client Downloader.exe"
         
-        ### Fusion360.exe running means installation complete
-      - shell: cmd
-        continue-on-error: false
-        run: C:\Windows\System32\taskkill.exe /f /im Fusion360.exe
-    
       - shell: cmd
         continue-on-error: true
         run: C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe
 
+        ### Fusion360.exe running means installation complete
+      - shell: cmd
+        continue-on-error: false
+        run: C:\Windows\System32\taskkill.exe /f /im Fusion360.exe
+        
       - shell: cmd
         run: |
           dir
