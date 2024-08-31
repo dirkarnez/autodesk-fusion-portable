@@ -64,7 +64,7 @@ jobs:
           
       - shell: cmd
         run: |
-          cd /d "%LOCALAPPDATA%\Autodesk" &&
+          cd /d "%LOCALAPPDATA%\Autodesk" &&^
           dir
 
 # Fusion360.ico
