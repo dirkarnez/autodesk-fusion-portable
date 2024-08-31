@@ -37,7 +37,19 @@ jobs:
         continue-on-error: true
         run: C:\Windows\System32\taskkill.exe /f /im FusionLauncher.exe
 
-        ### Fusion360.exe running means installation complete
+      - shell: cmd
+        continue-on-error: true
+        run: C:\Windows\System32\taskkill.exe /f /im QtWebEngineProcess.exe
+
+      - shell: cmd
+        continue-on-error: true
+        run: C:\Windows\System32\taskkill.exe /f /im AdskIdentityManager.exe
+
+      - shell: cmd
+        continue-on-error: true
+        run: C:\Windows\System32\taskkill.exe /f /im ADPClientService.exe
+
+        # Fusion360.exe running means installation complete, must be running
       - shell: cmd
         continue-on-error: false
         run: C:\Windows\System32\taskkill.exe /f /im Fusion360.exe
@@ -49,10 +61,24 @@ jobs:
       - shell: cmd
         run: |
           dir
+          
+      - shell: cmd
+        run: |
+          cd /d "%LOCALAPPDATA%\Autodesk" &&
+          dir
+
+# Fusion360.ico
+# Fusion360Develop.ico
+# Fusion360Insider.ico
+# Fusion360Major.ico
+# Fusion360Minor.ico
+# Fusion360PR.ico
+# FusionLauncher.exe
+# FusionLauncher.exe.ini
 
       - shell: cmd
         run: |
-          cd /d "$LOCALAPPDATA\Autodesk\webdeploy\production\6a0c9611291d45bb9226980209917c3d" && \
+          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\6a0c9611291d45bb9226980209917c3d" && \
           curl https://github.com/dirkarnez/regex-file-replace/releases/download/v1.0.0/regex-file-replace-v1.0.0-windows-latest.zip -L -O &&^
           7z x regex-file-replace-v1.0.0-windows-latest.zip &&^
           .\regex-file-replace.exe --regex="^cmd = .*" --replacement="cmd = \"\"Fusion360.exe\"\"" --filepath=FusionLauncher.exe.ini &&^
@@ -63,6 +89,15 @@ jobs:
           cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\" &&^
           move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe.ini" 1a197c6e79bef01edef1dc4f317d9f597820e633 &&^
           move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe" 1a197c6e79bef01edef1dc4f317d9f597820e633 &&^
+          dir
+
+        # %LOCALAPPDATA%\Autodesk\Common\Material Library\20240514-fy25-4.1.2
+      - shell: cmd
+        run: |
+          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633" &&^
+          mkdir "USERPROFILE\AppData\Local\Autodesk\Common\Material Library\" &&^
+          cd "USERPROFILE\AppData\Local\Autodesk\Common\Material Library" &&^
+          move "%LOCALAPPDATA%\Autodesk\Common\Material Library\20240514-fy25-4.1.2" . &&^
           dir
           
       - shell: cmd
