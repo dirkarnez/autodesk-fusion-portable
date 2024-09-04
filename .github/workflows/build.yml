@@ -118,7 +118,8 @@ jobs:
           set CURRENT_DIRECTORY=%CD%
           echo %CURRENT_DIRECTORY% &&^
           cd /d "%USERPROFILE%\" &&^
-          7z.exe -v100m a -tzip "%CURRENT_DIRECTORY%\${{ env.targetZip }}" "AppData\Local\Autodesk" "FusionLauncher.exe.Portable.cmd" &&^
+          cd .. &&^
+          7z.exe -v100m a -tzip "%CURRENT_DIRECTORY%\${{ env.targetZip }}" "%LOCALAPPDATA%\Autodesk" "FusionLauncher.exe.Portable.cmd" &&^
           dir
           
       - shell: cmd
