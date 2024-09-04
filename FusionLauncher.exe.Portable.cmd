@@ -28,4 +28,4 @@ if not exist %LOCALAPPDATA% (
 	mkdir %LOCALAPPDATA%
 )
 
-start "" "%USERPROFILE%\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633\FusionLauncher.exe"
+start "" "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633\FusionLauncher.exe"
