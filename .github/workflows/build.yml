@@ -91,17 +91,22 @@ jobs:
           move /Y "6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe" 1a197c6e79bef01edef1dc4f317d9f597820e633 &&^
           dir
 
-        # %LOCALAPPDATA%\Autodesk\Common\Material Library\20240514-fy25-4.1.2
       - shell: cmd
         run: |
-          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633" &&^
-          mkdir "USERPROFILE\AppData\Local\Autodesk\Common\Material Library\" &&^
-          cd "USERPROFILE\AppData\Local\Autodesk\Common\Material Library" &&^
-          move "%LOCALAPPDATA%\Autodesk\Common\Material Library\20240514-fy25-4.1.2" . &&^
-          dir
+          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\" &&^
+          rmdir /s /q 6a0c9611291d45bb9226980209917c3d
+
+      #   # %LOCALAPPDATA%\Autodesk\Common\Material Library\20240514-fy25-4.1.2
+      # - shell: cmd
+      #   run: |
+      #     cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633" &&^
+      #     mkdir "USERPROFILE\AppData\Local\Autodesk\Common\Material Library\" &&^
+      #     cd "USERPROFILE\AppData\Local\Autodesk\Common\Material Library" &&^
+      #     move "%LOCALAPPDATA%\Autodesk\Common\Material Library\20240514-fy25-4.1.2" . &&^
+      #     dir
           
       - shell: cmd
-        run: move /Y "FusionLauncher.exe.Portable.cmd" "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633"
+        run: move /Y "FusionLauncher.exe.Portable.cmd" "%USERPROFILE%\..\"
         
       - shell: cmd
         run: |
@@ -112,8 +117,8 @@ jobs:
         run: |
           set CURRENT_DIRECTORY=%CD%
           echo %CURRENT_DIRECTORY% &&^
-          cd /d "%LOCALAPPDATA%\Autodesk\webdeploy\production\1a197c6e79bef01edef1dc4f317d9f597820e633\" &&^
-          7z.exe -v100m a -tzip "%CURRENT_DIRECTORY%\${{ env.targetZip }}" &&^
+          cd /d "%USERPROFILE%\" &&^
+          7z.exe -v100m a -tzip "%CURRENT_DIRECTORY%\${{ env.targetZip }}" "AppData\Local\Autodesk" "FusionLauncher.exe.Portable.cmd" &&^
           dir
           
       - shell: cmd
