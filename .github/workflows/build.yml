@@ -124,7 +124,9 @@ jobs:
           md USERPROFILE\AppData\Local &&^
           cd "USERPROFILE\AppData\Local" &&^
           move "%LOCALAPPDATA%\Autodesk" . &&^
-          cd ..\.. &&^
+          cd /d "%USERPROFILE%\" &&^
+          echo %CD% &&^
+          cd .. &&^
           echo %CD% &&^
           7z.exe -v100m a -tzip "%CURRENT_DIRECTORY%\${{ env.targetZip }}" "USERPROFILE" "FusionLauncher.exe.Portable.cmd" &&^
           dir
