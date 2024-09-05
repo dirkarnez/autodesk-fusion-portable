@@ -119,7 +119,10 @@ jobs:
           echo %CURRENT_DIRECTORY% &&^
           cd /d "%USERPROFILE%\" &&^
           cd .. &&^
-          7z.exe -v100m a -tzip "%CURRENT_DIRECTORY%\${{ env.targetZip }}" "%LOCALAPPDATA%\Autodesk" "FusionLauncher.exe.Portable.cmd" &&^
+          md USERPROFILE\AppData\Local &&^
+          cd "USERPROFILE\AppData\Local" &&^
+          move "%LOCALAPPDATA%\Autodesk" . &&^
+          7z.exe -v100m a -tzip "%CURRENT_DIRECTORY%\${{ env.targetZip }}" "USERPROFILE" "FusionLauncher.exe.Portable.cmd" &&^
           dir
           
       - shell: cmd
